@@ -94,6 +94,7 @@ STR_0089    :Mini Montaña Rusa
 STR_0090    :Trenes Mineros
 STR_0091    :Atracc. Desconocida (59)
 STR_0092    :Montaña Rusa Impulso MLI
+STR_0093    :Montaña Rusa Híbrida 
 STR_0512    :Una montaña rusa pequeña de acero con una subida en espiral y vagones con asientos en línea.
 STR_0513    :Una montaña rusa en el que los pasajeros permanecen de pie.
 STR_0514    :Los vagones suspendidos bajo los raíles se balancean hacia los lados en las curvas.
@@ -173,6 +174,7 @@ STR_0598    :Los vagones de la montaña rusa invertida aceleran saliendo del and
 STR_0599    :Una montaña rusa compacta con vagones individuales y caídas y giros suaves.
 STR_0600    :Trenes mineros autopropulsados corren a lo largo de una vía enredada.
 STR_0602    :Los vagones se aceleran por los motores lineales de inducción
+STR_0603    :Una montaña rusa estilo de madera con vías de acero, lo que le permite caídas empinadas e inversiones.
 STR_0767    :Visitante {INT32}
 STR_0768    :Manita {INT32}
 STR_0769    :Mecánico {INT32}
@@ -1966,7 +1968,6 @@ STR_2763    :???
 STR_2765    :Grupo de visitantes
 STR_2766    :Ganar escenario
 STR_2767    :Mantener clima
-STR_2768    :Clima cambiante
 STR_2769    :Abrir parque
 STR_2770    :Cerrar parque
 STR_2773    :Ventana
@@ -2700,8 +2701,6 @@ STR_5365    :{BLACK}Velocidad empleados:
 STR_5366    :Normal
 STR_5367    :Rápida
 STR_5368    :Reiniciar Accidentes
-STR_5369    :Parámetros parque…
-STR_5370    :{SMALLFONT}{BLACK}Modificar parámetros como restricciones, afluencia de visitantes y dinero.
 STR_5371    :Selección de Objetos
 STR_5372    :Invertir desplazamiento del clic derecho
 STR_5373    :Nombre {STRINGID}
@@ -3145,7 +3144,6 @@ STR_5846    :{SMALLFONT}{BLACK}Establece con cuanta frecuencia OpenRCT2 guarda l
 STR_5847    :{SMALLFONT}{BLACK}Selecciona la secuencia del parque usada en el menú principal. Secuencias de RCT1/RCT2 requieren la importación de los escenarios para funcionar.
 STR_5848    :{SMALLFONT}{BLACK}Crea o modifica las secuencias del menú principal.
 STR_5849    :{SMALLFONT}{BLACK}Colocar automáticamente los nuevos empleados contratados.
-STR_5850    :<removed string - do not use>
 STR_5851    :{SMALLFONT}{BLACK}Establece el tiempo de inspección por defecto en las atracciones nuevas.
 STR_5853    :{SMALLFONT}{BLACK}Habilitar/Deshabilitar efectos de sonido.
 STR_5854    :{SMALLFONT}{BLACK}Habilitar/Deshabilitar músicas de atracciones.
@@ -3652,6 +3650,10 @@ STR_6386    :Tormenta de nieve
 STR_6387    :No se puede bajar el elemento aquí…
 STR_6388    :No se puede subir el elemento aquí…
 STR_6389    :Espacio inválido
+STR_6390    :OpenRCT2 necesita los archivos originales del juego RollerCoaster Tycoon 2 para poder funcionar. Por favor selecciona el directorio donde tienes instalado el RollerCoaster Tycoon 2.
+STR_6391    :Elige tu directorio de RCT2.
+STR_6392    :No se pudo encontrar {STRING} en esta ruta.
+STR_6393    :Selección de Objetivo.
 
 ##############
 # Escenarios #
