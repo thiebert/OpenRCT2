@@ -7,22 +7,28 @@
  * OpenRCT2 is licensed under the GNU General Public License version 3.
  *****************************************************************************/
 
+#include "../../Context.h"
 #include "../../Game.h"
 #include "../../config/Config.h"
 #include "../../interface/Viewport.h"
 #include "../../localisation/Localisation.h"
 #include "../../ride/Ride.h"
 #include "../../ride/TrackDesign.h"
+#include "../../sprites.h"
 #include "../../util/Util.h"
 #include "../../world/Banner.h"
 #include "../../world/LargeScenery.h"
 #include "../../world/Map.h"
 #include "../../world/Scenery.h"
+#include "../../object/ObjectManager.h"
 #include "../Paint.h"
 #include "../Supports.h"
 #include "Paint.TileElement.h"
 
 #include <iterator>
+#include <algorithm>
+#include <string>
+#include <iostream>
 
 // 6B8172:
 static void large_scenery_paint_supports(
@@ -234,8 +240,21 @@ void large_scenery_paint(paint_session* session, uint8_t direction, uint16_t hei
     uint32_t image_id = (sequenceNum << 2) + entry->image + 4 + direction;
     rct_large_scenery_tile* tile = &entry->large_scenery.tiles[sequenceNum];
     uint32_t dword_F4387C = 0;
+     ObjectEntryIndex entryIndex = tileElement->AsLargeScenery()->GetEntryIndex();
+     auto& objMgr = OpenRCT2::GetContext()->GetObjectManager();
+     auto obj = objMgr.GetLoadedObject(OBJECT_TYPE_LARGE_SCENERY, entryIndex);
+     std::string name = std::string(obj->GetLegacyIdentifier());
+     std::vector<std::string> blackTiles = { "CBBB", "MGCBG1X1", "MGBMT1X1", "MGCBG3X3", "X97MGCB3", "MGCBG5X5", "MGCBG7X7" };
+     if ((session->ViewFlags & VIEWPORT_FLAG_TRANSPARENT_BACKGROUND) && std::find(blackTiles.begin(), blackTiles.end(), name)
+         != blackTiles.end())
+    {
+        return;
+    }
+     else
+    {
     image_id |= SPRITE_ID_PALETTE_COLOUR_2(
         tileElement->AsLargeScenery()->GetPrimaryColour(), tileElement->AsLargeScenery()->GetSecondaryColour());
+    }
     LocationXYZ16 boxlength;
     LocationXYZ16 boxoffset;
     if (gTrackDesignSaveMode)
@@ -276,6 +295,7 @@ void large_scenery_paint(paint_session* session, uint8_t direction, uint16_t hei
     boxlength.x = s98E3C4[esi].length.x;
     boxlength.y = s98E3C4[esi].length.y;
     boxlength.z = ah;
+
     sub_98197C(session, image_id, 0, 0, boxlength.x, boxlength.y, ah, height, boxoffset.x, boxoffset.y, boxoffset.z);
     if (entry->large_scenery.scrolling_mode == SCROLLING_MODE_NONE || direction == 1 || direction == 2)
     {

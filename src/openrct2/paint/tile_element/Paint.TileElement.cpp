@@ -9,6 +9,7 @@
 
 #include "Paint.TileElement.h"
 
+#include "../../Context.h"
 #include "../../Game.h"
 #include "../../Input.h"
 #include "../../config/Config.h"
@@ -29,6 +30,8 @@
 #include "../Supports.h"
 #include "../VirtualFloor.h"
 #include "Paint.Surface.h"
+#include "../../object/ObjectManager.h"
+
 
 #include <algorithm>
 
@@ -292,6 +295,33 @@ static void sub_68B3FB(paint_session* session, int32_t x, int32_t y)
         switch (tile_element->GetType())
         {
             case TILE_ELEMENT_TYPE_SURFACE:
+
+                if ((session->ViewFlags & VIEWPORT_FLAG_TRANSPARENT_BACKGROUND) && !tile_element->IsLastForTile())
+                {
+                    TileElement* tile_iterator = tile_element + 1;
+                    bool isBlacktiled = false;
+                    do
+                    {
+                        if ((tile_iterator)->GetType() == TILE_ELEMENT_TYPE_LARGE_SCENERY)
+                        {
+                            ObjectEntryIndex entryIndex = tile_iterator->AsLargeScenery()->GetEntryIndex();
+                            auto& objMgr = OpenRCT2::GetContext()->GetObjectManager();
+                            auto obj = objMgr.GetLoadedObject(OBJECT_TYPE_LARGE_SCENERY, entryIndex);
+                            std::string name = std::string(obj->GetLegacyIdentifier());
+                            std::vector<std::string> blackTiles = { "CBBB",     "MGCBG1X1", "MGBMT1X1", "MGCBG3X3",
+                                                                    "X97MGCB3", "MGCBG5X5", "MGCBG7X7" };
+                            if (std::find(blackTiles.begin(), blackTiles.end(), name) != blackTiles.end())
+                            {
+                                isBlacktiled = true;
+                                break;
+                            }
+                        }
+                    } while (!((tile_iterator++)->IsLastForTile()));
+                    if (isBlacktiled)
+                    {
+                        break;
+                    }
+                }
                 surface_paint(session, direction, baseZ, tile_element);
                 break;
             case TILE_ELEMENT_TYPE_PATH:
@@ -304,7 +334,11 @@ static void sub_68B3FB(paint_session* session, int32_t x, int32_t y)
                 scenery_paint(session, direction, baseZ, tile_element);
                 break;
             case TILE_ELEMENT_TYPE_ENTRANCE:
-                entrance_paint(session, direction, baseZ, tile_element);
+                if (!(session->ViewFlags & VIEWPORT_FLAG_TRANSPARENT_BACKGROUND))
+                {
+                    entrance_paint(session, direction, baseZ, tile_element);
+                    break;
+                }
                 break;
             case TILE_ELEMENT_TYPE_WALL:
                 fence_paint(session, direction, baseZ, tile_element);
